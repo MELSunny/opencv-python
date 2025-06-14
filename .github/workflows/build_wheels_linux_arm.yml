@@ -20,7 +20,7 @@ on:
 
 jobs:
   Build:
-    runs-on: opencv-cn-lin-arm64
+    runs-on: self-hosted
     defaults:
       run:
         shell: bash
@@ -72,7 +72,7 @@ jobs:
 
   Test:
     needs: [Build]
-    runs-on: opencv-cn-lin-arm64
+    runs-on: self-hosted
     defaults:
       run:
         shell: bash
@@ -115,7 +115,7 @@ jobs:
   Release_rolling:
     if: ${{ github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' }}
     needs: [Build, Test]
-    runs-on: ubuntu-22.04
+    runs-on: self-hosted
     environment: opencv-python-rolling-release
     defaults:
       run:
@@ -145,7 +145,7 @@ jobs:
   Pre-release:
     if: github.event_name == 'release' && github.event.release.prerelease
     needs: [Build, Test]
-    runs-on: ubuntu-22.04
+    runs-on: self-hosted
     environment: test-opencv-python-release
     defaults:
       run:
@@ -163,7 +163,7 @@ jobs:
   Release:
     if: github.event_name == 'release' && !github.event.release.prerelease
     needs: [Build, Test]
-    runs-on: ubuntu-22.04
+    runs-on: self-hosted
     environment: opencv-python-release
     defaults:
       run:
